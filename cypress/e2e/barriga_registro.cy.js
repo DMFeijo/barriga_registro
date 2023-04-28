@@ -14,15 +14,16 @@ describe('Testes de registro', () => {
     cy.get('[placeholder=Senha]').type('senha123')
     //Clicar no botão "registrar"
     cy.get('.btn').click()
-    //Interagir com o campo "nome"
-    cy.contains('Usuário adicionado com sucesso')
+    //Verificar se usuario foi adicionado com sucesso
+    cy.get('.toast').should('be.visible')
+     .and('contain','Usuário adicionado com sucesso')
   })
-  it('Teste de registro sem o preenchimento do campo "nome"', () => {
+  it.only('Teste de registro sem o preenchimento do campo "nome"', () => {
 
     cy.get('[placeholder=Email]').type('teste_cy@teste.com')
     cy.get('[placeholder=Senha]').type('senha123')
     cy.get('.btn').click()
-    cy.contains('Erro')
+    cy.contains('status code 500')
     
   });
   it('Teste de registro sem o preenchimento do campo "email"', () => {
@@ -30,7 +31,7 @@ describe('Testes de registro', () => {
     cy.get('[placeholder=Nome]').type('teste_cy@teste.com')
     cy.get('[placeholder=Senha]').type('senha123')
     cy.get('.btn').click()
-    cy.contains('Erro')
+    cy.contains('status code 500')
     
   });
   it('Teste de registro sem o preenchimento do campo "senha"', () => {
@@ -38,10 +39,10 @@ describe('Testes de registro', () => {
     cy.get('[placeholder=Nome]').type('teste_cy@teste.com')
     cy.get('[placeholder=Email]').type('senha123')
     cy.get('.btn').click()
-    cy.contains('Erro')
+    cy.contains('status code 500')
 
   });
-  it.only('Teste de registro sem o preenchimento dos campos', () => {
+  it('Teste de registro sem o preenchimento dos campos', () => {
     
     cy.get('.btn').click()
     cy.contains('status code 500')
